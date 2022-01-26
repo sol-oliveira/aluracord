@@ -28,10 +28,10 @@ export default function PaginaInicial() {
   return (
     <>    
       <Box
-        styleSheet={{
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          backgroundColor: appConfig.theme.colors.primary[500],
-          backgroundImage: 'url(https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg)',
+        styleSheet={{         
+          display: 'flex', alignItems: 'center', justifyContent: 'center',   
+          backgroundSize: 'none',     
+          backgroundImage: 'url(https://virtualbackgrounds.site/wp-content/uploads/2020/09/toy-story-andys-room-wallpaper.jpeg)',          
           backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
         }}
       >
@@ -46,8 +46,7 @@ export default function PaginaInicial() {
             },
             width: '100%', maxWidth: '700px',
             borderRadius: '5px', padding: '32px', margin: '16px',
-            boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
-            backgroundColor: appConfig.theme.colors.neutrals[700],
+            boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',           
           }}
         >
           {/* Formulário */}
@@ -64,7 +63,7 @@ export default function PaginaInicial() {
             }}
           >
             <Titulo tag="h2">Boas vindas de volta!</Titulo>
-            <Text variant="body3" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals[300] }}>
+            <Text variant="body3" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals[200] }}>
               {appConfig.name}
             </Text>
 
@@ -77,10 +76,10 @@ export default function PaginaInicial() {
               fullWidth
               textFieldColors={{
                 neutral: {
-                  textColor: appConfig.theme.colors.neutrals[200],
-                  mainColor: appConfig.theme.colors.neutrals[900],
-                  mainColorHighlight: appConfig.theme.colors.primary[500],
-                  backgroundColor: appConfig.theme.colors.neutrals[800],
+                  textColor: appConfig.theme.colors.neutrals[100],
+                  mainColor: appConfig.theme.colors.neutrals[200],
+                  mainColorHighlight: appConfig.theme.colors.neutrals[100],
+                  backgroundColor: appConfig.theme.colors.neutrals[300],
                 },
               }}
             />
@@ -90,9 +89,9 @@ export default function PaginaInicial() {
               fullWidth
               buttonColors={{
                 contrastColor: appConfig.theme.colors.neutrals["000"],
-                mainColor: appConfig.theme.colors.primary[500],
-                mainColorLight: appConfig.theme.colors.primary[400],
-                mainColorStrong: appConfig.theme.colors.primary[600],
+                mainColor: appConfig.theme.colors.neutrals[300],
+                mainColorLight: appConfig.theme.colors.neutrals[400],
+                mainColorStrong: appConfig.theme.colors.neutrals[400],
               }}
             />
           </Box>
@@ -107,9 +106,9 @@ export default function PaginaInicial() {
               alignItems: 'center',
               maxWidth: '200px',
               padding: '16px',
-              backgroundColor: appConfig.theme.colors.neutrals[800],
+              backgroundColor: appConfig.theme.colors.neutrals[300],
               border: '1px solid',
-              borderColor: appConfig.theme.colors.neutrals[999],
+              borderColor: appConfig.theme.colors.neutrals[400],
               borderRadius: '10px',
               flex: 1,
               minHeight: '240px',
@@ -126,7 +125,7 @@ export default function PaginaInicial() {
               variant="body4"
               styleSheet={{
                 color: appConfig.theme.colors.neutrals[200],
-                backgroundColor: appConfig.theme.colors.neutrals[900],
+                backgroundColor: appConfig.theme.colors.neutrals[400],
                 padding: '3px 10px',
                 borderRadius: '1000px'
               }}
