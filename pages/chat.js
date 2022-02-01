@@ -1,42 +1,69 @@
 import { Box, Text, TextField, Image, Button } from '@skynexui/components';
 import React from 'react';
 import appConfig from '../config.json';
-import { createClient } from '@supabase/supabase-js'
+import { useRouter } from 'next/router';
+import { createClient } from '@supabase/supabase-js';
+import { ButtonSendSticker } from '../src/components/ButtonSendSticker';
+
 
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzM3MzcyMiwiZXhwIjoxOTU4OTQ5NzIyfQ.Asy8ujebjcSL0lYDbWQ45zZgOIN56ox9V8Hj0xJ6xgg';
 const SUPABASE_URL = 'https://sqwmayovhrxiwzbekdwm.supabase.co';
 
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+function escutaMensagensEmTempoReal(adicionaMensagem) {
+    return supabaseClient
+      .from('mensages')
+      .on('INSERT', (respostaLive) => {
+        adicionaMensagem(respostaLive.new);
+      })
+      .subscribe();
+  }
+
 export default function ChatPage() {
     const [mensagem, setMensagem] = React.useState('');
     const [listaDeMensagens, setListaDeMensagens] = React.useState([]);
+    const roteamento = useRouter();
+    const usuarioLogado = roteamento.query.username;    
 
-    React.useEffect(()=> {
+    React.useEffect(() => {
         supabaseClient
-        .from('mensages')
-        .select('*')
-        .order('id', { ascending:false })
-        .then(({data}) => {
-            setListaDeMensagens(data);
-        });
+            .from('mensages')
+            .select('*')
+            .order('id', { ascending: false })
+            .then(({ data }) => {
+                setListaDeMensagens(data);
+            });
+
+            const subscription = escutaMensagensEmTempoReal((novaMensagem) => {                
+                setListaDeMensagens((valorAtualDaLista) => {                 
+                  return [
+                    novaMensagem,
+                    ...valorAtualDaLista,
+                  ]
+                });
+              });
+          
+              return () => {
+                subscription.unsubscribe();
+              }
     }, []);
-  
+
     function handleNovaMensagem(novaMensagem) {
         const mensagem = {
-            de: 'sol-oliveira',
+            de: usuarioLogado,
             texto: novaMensagem,
         };
 
         supabaseClient
-        .from('mensages')
-        .insert([mensagem])
-        .then(({data}) => {
-            setListaDeMensagens([
-                data[0],
-                ...listaDeMensagens,
-            ]);
-        });
+            .from('mensages')
+            .insert([mensagem])
+            .then(({ data }) => {
+                setListaDeMensagens([
+                    data[0],
+                    ...listaDeMensagens,
+                ]);
+            });
 
         setListaDeMensagens([
             mensagem,
@@ -44,11 +71,19 @@ export default function ChatPage() {
         ]);
         setMensagem('');
     }
+const subscription = escutaMensagensEmTempoReal((novaMensagem) => {     
+      setListaDeMensagens((valorAtualDaLista) => {     
+        return [
+          novaMensagem,
+          ...valorAtualDaLista,
+        ]
+      });
+    });
 
     return (
         <Box
             styleSheet={{
-                display: 'flex', alignItems: 'center', justifyContent: 'center',               
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
                 backgroundImage: `url(https://virtualbackgrounds.site/wp-content/uploads/2020/09/toy-story-andys-room-wallpaper.jpeg)`,
                 backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
                 color: appConfig.theme.colors.neutrals['000']
@@ -60,7 +95,7 @@ export default function ChatPage() {
                     flexDirection: 'column',
                     flex: 1,
                     boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
-                    borderRadius: '5px',                   
+                    borderRadius: '5px',
                     height: '100%',
                     maxWidth: '95%',
                     maxHeight: '95vh',
@@ -73,20 +108,13 @@ export default function ChatPage() {
                         position: 'relative',
                         display: 'flex',
                         flex: 1,
-                        height: '80%',                      
+                        height: '80%',
                         flexDirection: 'column',
                         borderRadius: '5px',
                         padding: '16px',
                     }}
                 >
-                    <MessageList mensagens={listaDeMensagens} />
-                    {/* {listaDeMensagens.map((mensagemAtual) => {
-                        return (
-                            <li key={mensagemAtual.id}>
-                                {mensagemAtual.de}: {mensagemAtual.texto}
-                            </li>
-                        )
-                    })} */}
+                    <MessageList mensagens={listaDeMensagens} />                   
                     <Box
                         as="form"
                         styleSheet={{
@@ -119,6 +147,11 @@ export default function ChatPage() {
                                 color: appConfig.theme.colors.neutrals[400],
                             }}
                         />
+                        <ButtonSendSticker
+                            onStickerClick={(sticker) => {                               
+                                handleNovaMensagem(':sticker: ' + sticker);
+                            }}
+                        />
                     </Box>
                 </Box>
             </Box>
@@ -137,14 +170,14 @@ function Header() {
                     variant='tertiary'
                     colorVariant='neutral'
                     label='Logout'
-                    href="/"                   
+                    href="/"
                 />
             </Box>
         </>
     )
 }
 
-function MessageList(props) {   
+function MessageList(props) {
     return (
         <Box
             tag="ul"
@@ -165,7 +198,7 @@ function MessageList(props) {
                         styleSheet={{
                             borderRadius: '5px',
                             padding: '6px',
-                            marginBottom: '12px',                            
+                            marginBottom: '12px',
                         }}
                     >
                         <Box
@@ -197,7 +230,20 @@ function MessageList(props) {
                                 {(new Date().toLocaleDateString())}
                             </Text>
                         </Box>
-                        {mensagem.texto}
+                        {mensagem.texto.startsWith(':sticker:')
+                            ? (
+                                <Image styleSheet={{
+                                    width: '70px',
+                                    height: '70px',
+                                    borderRadius: '50%',
+                                    display: 'inline-block',
+                                    marginRight: '8px',
+                                }}
+                                src={mensagem.texto.replace(':sticker:', '')} />
+                            )
+                            : (
+                                mensagem.texto
+                            )}
                     </Text>
                 );
             })}
