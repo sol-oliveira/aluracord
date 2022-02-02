@@ -26,7 +26,7 @@ export function ButtonSendSticker(props) {
           backgroundColor: appConfig.theme.colors.sol[300],
           filter: isOpen ? appConfig.theme.colors.primary[300] : appConfig.theme.colors.sol[300],
           hover: {
-            filter:  appConfig.theme.colors.primary[300],
+            filter:  appConfig.theme.colors.neutrals[300],
           }
         }}
         label="😋"

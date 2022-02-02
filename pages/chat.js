@@ -58,10 +58,27 @@ export default function ChatPage() {
         supabaseClient
             .from('mensages')
             .insert([mensagem])
-            .then(({ data }) => {              
-            });        
+            .then(({ data }) => {
+                setListaDeMensagens([
+                    data[0],
+                    ...listaDeMensagens,
+                ]);
+            });
+
+        setListaDeMensagens([
+            mensagem,
+            ...listaDeMensagens,
+        ]);
         setMensagem('');
     }
+const subscription = escutaMensagensEmTempoReal((novaMensagem) => {     
+      setListaDeMensagens((valorAtualDaLista) => {     
+        return [
+          novaMensagem,
+          ...valorAtualDaLista,
+        ]
+      });
+    });
 
     return (
         <Box
@@ -83,7 +100,6 @@ export default function ChatPage() {
                     maxWidth: '95%',
                     maxHeight: '95vh',
                     padding: '32px',
-                    
                 }}
             >
                 <Header />
@@ -166,7 +182,7 @@ function MessageList(props) {
         <Box
             tag="ul"
             styleSheet={{
-                overflow: 'hidden',
+                overflow: 'scroll',
                 display: 'flex',
                 flexDirection: 'column-reverse',
                 flex: 1,
@@ -183,9 +199,6 @@ function MessageList(props) {
                             borderRadius: '5px',
                             padding: '6px',
                             marginBottom: '12px',
-                            hover: {
-                                backgroundColor: appConfig.theme.colors.neutrals[300],
-                              }
                         }}
                     >
                         <Box
@@ -195,8 +208,8 @@ function MessageList(props) {
                         >
                             <Image
                                 styleSheet={{
-                                    width: '40px',
-                                    height: '40px',
+                                    width: '20px',
+                                    height: '20px',
                                     borderRadius: '50%',
                                     display: 'inline-block',
                                     marginRight: '8px',
