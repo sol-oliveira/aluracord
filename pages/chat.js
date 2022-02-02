@@ -59,26 +59,10 @@ export default function ChatPage() {
             .from('mensages')
             .insert([mensagem])
             .then(({ data }) => {
-                setListaDeMensagens([
-                    data[0],
-                    ...listaDeMensagens,
-                ]);
+                
             });
-
-        setListaDeMensagens([
-            mensagem,
-            ...listaDeMensagens,
-        ]);
-        setMensagem('');
+       setMensagem('');
     }
-const subscription = escutaMensagensEmTempoReal((novaMensagem) => {     
-      setListaDeMensagens((valorAtualDaLista) => {     
-        return [
-          novaMensagem,
-          ...valorAtualDaLista,
-        ]
-      });
-    });
 
     return (
         <Box
