@@ -58,27 +58,10 @@ export default function ChatPage() {
         supabaseClient
             .from('mensages')
             .insert([mensagem])
-            .then(({ data }) => {
-                setListaDeMensagens([
-                    data[0],
-                    ...listaDeMensagens,
-                ]);
-            });
-
-        setListaDeMensagens([
-            mensagem,
-            ...listaDeMensagens,
-        ]);
+            .then(({ data }) => {              
+            });        
         setMensagem('');
     }
-const subscription = escutaMensagensEmTempoReal((novaMensagem) => {     
-      setListaDeMensagens((valorAtualDaLista) => {     
-        return [
-          novaMensagem,
-          ...valorAtualDaLista,
-        ]
-      });
-    });
 
     return (
         <Box
@@ -100,6 +83,7 @@ const subscription = escutaMensagensEmTempoReal((novaMensagem) => {
                     maxWidth: '95%',
                     maxHeight: '95vh',
                     padding: '32px',
+                    
                 }}
             >
                 <Header />
@@ -199,6 +183,9 @@ function MessageList(props) {
                             borderRadius: '5px',
                             padding: '6px',
                             marginBottom: '12px',
+                            hover: {
+                                backgroundColor: appConfig.theme.colors.neutrals[300],
+                              }
                         }}
                     >
                         <Box
@@ -208,8 +195,8 @@ function MessageList(props) {
                         >
                             <Image
                                 styleSheet={{
-                                    width: '20px',
-                                    height: '20px',
+                                    width: '40px',
+                                    height: '40px',
                                     borderRadius: '50%',
                                     display: 'inline-block',
                                     marginRight: '8px',
