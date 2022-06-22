@@ -1,3 +1,5 @@
+import Head from "next/head";
+
 function GlobalStyle() {
   return (
       <style global jsx>{`
@@ -31,6 +33,12 @@ export default function CustomApp({ Component, pageProps }) {
   return (
       <>
           <GlobalStyle />
+          <Head>
+                <title>Arulacord</title>
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+                <meta property="og:title" content="Arulacord" key="title" />               
+                <link rel="shortcut icon" href="/favicon.ico" />
+            </Head>
           <Component {...pageProps} />
       </>
   );
