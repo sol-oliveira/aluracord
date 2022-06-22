@@ -1,31 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@sol-oliveira 
-alura-challenges
-/
-aluracord-matrix
-Public
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-aluracord-matrix/.gitignore
-@omariosouto
-omariosouto setup
-Latest commit cd9a638 9 days ago
- History
- 1 contributor
-130 lines (97 sloc)  2 KB
-   
 # Logs
 logs
 *.log
@@ -156,15 +128,3 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-© 2022 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About

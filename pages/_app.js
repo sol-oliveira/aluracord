@@ -34,9 +34,9 @@ export default function CustomApp({ Component, pageProps }) {
       <>
           <GlobalStyle />
           <Head>
-                <title>Arulacord</title>
+                <title>Aluracord</title>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-                <meta property="og:title" content="Arulacord" key="title" />               
+                <meta property="og:title" content="Aluracord" key="title" />               
                 <link rel="shortcut icon" href="/favicon.ico" />
             </Head>
           <Component {...pageProps} />
