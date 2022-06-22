@@ -1,7 +1,4 @@
-
-<img width="800" alt="image" src="https://user-images.githubusercontent.com/71611273/174923578-ee8a3ae9-d0c4-4167-882b-16bd76a672e9.png">
-
-<img width="800" alt="image" src="https://user-images.githubusercontent.com/71611273/174926291-36dfb853-d690-4740-94bc-7b62d5493822.png">
+![](https___aluracorde-six.vercel.app.gif)
 
 
 ## 📋 Sobre
